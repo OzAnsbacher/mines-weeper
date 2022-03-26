@@ -76,3 +76,13 @@ if (value===0) value=''
 function getRandomIntInclusive(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+
+function showTimer(count = '0.0') {
+    var strTimer = document.querySelector('.timer')
+    strTimer.innerHTML = count
+  }
+  function startTime() {
+    runTime += 0.10
+    var strTimer = document.querySelector('.timer')
+    strTimer.innerHTML = runTime.toFixed(1)
+  }

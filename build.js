@@ -6,6 +6,7 @@ const COVER = '⬜'
 const MINE = '🏴‍☠️'
 const OPEN = 'open'
 
+var runTime = 0.0
 var gBombs = []
 var glife = '3'
 var score = 0
@@ -13,18 +14,21 @@ var gsizeBoard = 5
 var gBoard
 var gNumBomb = 2
 var gmaxScore
-
+var time = '0.0'
+var timer
 var gameActive = true
 var gfirstClick = true
 
 //
 function init() {
 
+    clearInterval(timer)
     creatGame()
     countMax()
     printLife()
     printSmily()
     updateScore()
+    showTimer()
 }
 
 //
@@ -49,18 +53,7 @@ function printSmily(smiley = "img/Smily.jpg") {
     imgSmily.innerHTML = `<img src=${smiley} alt="smily" height="100px"></img>`
 }
 
-// function neighborsBomb(gBoard) {
 
-//     for (var i = 0; i < gBoard.length; i++) {
-//         for (var j = 0; j < gBoard[i].length; j++) {
-//             if (gBoard[i][j].value === BOMB) continue
-//             var countBomb =gBoard[i][j].value 
-//             var countBomb += countNeighbors(i, j, gBoard)
-//             console.log( 'i=',i,' j=', j, ' bomb ', countBomb)
-//             // אין צורך לעדכן את הדום אלא רק את הגי בורד
-//         }
-//     }
-// }
 
 //
 function countMax() {
@@ -74,13 +67,11 @@ function countMax() {
 function hideBomb(neighbors) {
     // חיפוש פצצה
     var loctionBomb = true
-       for (let i = 0; i < gNumBomb; i++) {
+    for (let i = 0; i < gNumBomb; i++) {
         var col = getRandomIntInclusive(0, gsizeBoard - 1)
         var row = getRandomIntInclusive(0, gsizeBoard - 1)
         // var col = +prompt()
         // var row = +prompt()
-        console.log('row ', row)
-        console.log('col ', col)
         // הנחת הפצצה, והשמה במערך
         var loctionBomb = checkBombs(col, row, neighbors)
         if (loctionBomb) {
@@ -92,7 +83,7 @@ function hideBomb(neighbors) {
             countNeighbors(col, row)
         } else i--
     }
-    console.log('gBombs ', gBombs)
+   
     gfirstClick = false
 }
 
@@ -100,18 +91,16 @@ function checkBombs(col, row, neighbors) {
 
     for (let y = 0; y < neighbors.length; y++) {
         var neighbor = neighbors[y]
-        console.log('neighbor ', neighbor)
-        if (neighbor.i === col && neighbor.j === row) return false
+               if (neighbor.i === col && neighbor.j === row) return false
     }
     if (gBombs.length === 0) return true
-    console.log('gBombs.length ', gBombs.length)
-    for (let x = 0; x < gBombs.length; x++) {
+       for (let x = 0; x < gBombs.length; x++) {
         var bomb = gBombs[x]
         console.log('bomb ', bomb)
         if (bomb.i === col && bomb.j === row) return false
     }
-    
-   
+
+
     return true
 }
 
@@ -120,6 +109,7 @@ function checkBombs(col, row, neighbors) {
 function gameOver(end) {
 
     gameActive = false
+    clearInterval(timer)
     if (end) {
         var mesegeEnd = `YOU WIN <br> your score: ${score}`
         var buttonAgein = 'play agein'

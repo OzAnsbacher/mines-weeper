@@ -4,7 +4,11 @@
 function playGame(click) {
     var select = getLocationClick(click.id)
     var neighbors = openCover(select)
-    if (gfirstClick) hideBomb(neighbors)
+    if (gfirstClick) {
+        hideBomb(neighbors)
+        timer = setInterval(startTime, 100)
+
+    }
 }
 
 //
@@ -21,13 +25,14 @@ function getLocationClick(strCellId) {
 //select= i: j:
 function openCover(select) {
     if (!gameActive) return
-var valueSelect=gBoard[select.i][select.j].value
-    if (valueSelect===0||valueSelect===EMPTY) var neighbors = cellNeighbors(select)
-    else{
-        var neighbors= []
-        neighbors[0]=select
-    } 
-    console.log ('neighbors ', neighbors)
+    var recur = []
+    var valueSelect = gBoard[select.i][select.j].value
+    if (valueSelect === 0 || valueSelect === EMPTY) var neighbors = cellNeighbors(select)
+    else {
+        var neighbors = []
+        neighbors[0] = select
+    }
+    console.log('neighbors ', neighbors)
     for (let i = 0; i < neighbors.length; i++) {
         var cell = neighbors[i]
         var value = gBoard[cell.i][cell.j].value
@@ -36,6 +41,8 @@ var valueSelect=gBoard[select.i][select.j].value
         if (value === EMPTY || value === 0) {
             gBoard[cell.i][cell.j].vague = OPEN
             renderCell(cell, EMPTY)
+
+
         } else if (value > 0) {
             gBoard[cell.i][cell.j].vague = OPEN
             renderCell(cell, value)
@@ -50,7 +57,8 @@ var valueSelect=gBoard[select.i][select.j].value
         if (gmaxScore === score) {
             gameOver(true)
         }
-    } return neighbors
+    }
+    return neighbors
 }
 
 

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Mines Weeper</title>
     <link rel="stylesheet" href="style.css">
 
 </head>
@@ -14,15 +14,16 @@
 
     <div class="title-game">
         <h1>mines weeper</h1>
-        <button class="level button-titel" onclick="level(1)">easy</button>
-        <button class="level button-titel" onclick="level(3)">medium </button>
+        <button class="level level1 button-titel" onclick="level(1)">easy</button>
+        <button class="level level2 button-titel" onclick="level(3)">medium </button>
         <button class="level button-titel" onclick="level(5)">hard</button>
 
     </div>
     <div class="body-game">
         <div class="board-container"></div>
-        <div class="modal-end"></div>
         <div class="life"></div>
+        <div class="modal-end"></div>
+        <h2 class="timer"></h2>
         <div class="smiley"></div>
         <div class="score">score: <span class="score-num"></span></div>
     </div>
